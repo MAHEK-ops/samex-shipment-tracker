@@ -67,7 +67,7 @@ function Dashboard() {
   if (error) return (
     <div style={styles.center}>
       <div style={styles.errorBox}>
-        ⚠️ {error}
+        {error}
         <button style={styles.retryBtn} onClick={fetchShipments}>
           Retry
         </button>
