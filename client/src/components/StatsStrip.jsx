@@ -1,97 +1,67 @@
 function StatsStrip({ shipments }) {
-  const stats = {
-    Total: shipments.length,
-
-    Pending:
-      shipments.filter(
-        s => s.status === 'Pending'
-      ).length,
-
-    'Picked Up':
-      shipments.filter(
-        s => s.status === 'Picked Up'
-      ).length,
-
-    'In Transit':
-      shipments.filter(
-        s => s.status === 'In Transit'
-      ).length,
-
-    Delivered:
-      shipments.filter(
-        s => s.status === 'Delivered'
-      ).length,
-
-    Cancelled:
-      shipments.filter(
-        s => s.status === 'Cancelled'
-      ).length,
-  };
-
-  const CARD_STYLES = {
-    Total: {
-      accent: '#1a1a2e',
-      icon: '📦',
+  const stats = [
+    {
+      label: 'Total Shipments',
+      value: shipments.length,
+      icon: 'package',
+      color: '#4F8CFF',
+      bgColor: 'rgba(79, 140, 255, 0.1)',
     },
-
-    Pending: {
-      accent: '#856404',
-      icon: '🕐',
+    {
+      label: 'Pending',
+      value: shipments.filter(s => s.status === 'Pending').length,
+      icon: 'schedule',
+      color: '#FBBF24',
+      bgColor: 'rgba(251, 191, 36, 0.1)',
     },
-
-    'Picked Up': {
-      accent: '#004085',
-      icon: '📍',
+    {
+      label: 'Picked Up',
+      value: shipments.filter(s => s.status === 'Picked Up').length,
+      icon: 'location_on',
+      color: '#60A5FA',
+      bgColor: 'rgba(96, 165, 250, 0.1)',
     },
-
-    'In Transit': {
-      accent: '#155724',
-      icon: '🚚',
+    {
+      label: 'In Transit',
+      value: shipments.filter(s => s.status === 'In Transit').length,
+      icon: 'local_shipping',
+      color: '#34D399',
+      bgColor: 'rgba(52, 211, 153, 0.1)',
     },
-
-    Delivered: {
-      accent: '#0c5460',
-      icon: '✅',
+    {
+      label: 'Delivered',
+      value: shipments.filter(s => s.status === 'Delivered').length,
+      icon: 'check_circle',
+      color: '#2DD4BF',
+      bgColor: 'rgba(45, 212, 191, 0.1)',
     },
-
-    Cancelled: {
-      accent: '#721c24',
-      icon: '❌',
+    {
+      label: 'Cancelled',
+      value: shipments.filter(s => s.status === 'Cancelled').length,
+      icon: 'cancel',
+      color: '#F87171',
+      bgColor: 'rgba(248, 113, 113, 0.1)',
     },
-  };
+  ];
 
   return (
     <div style={styles.strip}>
-      {Object.entries(stats).map(
-        ([label, count]) => {
-          const { accent, icon } =
-            CARD_STYLES[label];
-
-          return (
-            <div
-              key={label}
-              style={styles.card}
+      {stats.map((stat) => (
+        <div key={stat.label} style={styles.card}>
+          <div style={{ ...styles.iconBox, backgroundColor: stat.bgColor }}>
+            <span 
+              className="material-symbols-outlined" 
+              style={{ ...styles.icon, color: stat.color }}
             >
-              <div style={styles.iconRow}>
-                <span>{icon}</span>
-
-                <span
-                  style={{
-                    ...styles.count,
-                    color: accent,
-                  }}
-                >
-                  {count}
-                </span>
-              </div>
-
-              <div style={styles.label}>
-                {label}
-              </div>
-            </div>
-          );
-        }
-      )}
+              {stat.icon}
+            </span>
+          </div>
+          <div style={styles.content}>
+            <p style={styles.label}>{stat.label}</p>
+            <p style={styles.value}>{stat.value}</p>
+          </div>
+        </div>
+      ))}
     </div>
   );
 }
@@ -99,33 +69,57 @@ function StatsStrip({ shipments }) {
 const styles = {
   strip: {
     display: 'grid',
-    gridTemplateColumns:
-      'repeat(auto-fit,minmax(140px,1fr))',
-    gap: '14px',
-    marginBottom: '24px',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))',
+    gap: '20px',
+    marginBottom: '40px',
   },
 
   card: {
-    background: '#fff',
-    padding: '16px',
-    borderRadius: '10px',
-    border: '1px solid #e2e8f0',
-  },
-
-  iconRow: {
+    background: 'rgba(255, 255, 255, 0.06)',
+    backdropFilter: 'blur(12px)',
+    WebkitBackdropFilter: 'blur(12px)',
+    border: '1px solid rgba(255, 255, 255, 0.08)',
+    padding: '24px',
+    borderRadius: '16px',
     display: 'flex',
-    justifyContent: 'space-between',
+    flexDirection: 'column',
+    gap: '12px',
+    transition: 'transform 0.2s ease, box-shadow 0.2s ease',
+    cursor: 'default',
   },
 
-  count: {
-    fontSize: '26px',
-    fontWeight: '800',
+  iconBox: {
+    width: '40px',
+    height: '40px',
+    borderRadius: '12px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  icon: {
+    fontSize: '24px',
+  },
+
+  content: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '4px',
   },
 
   label: {
-    fontSize: '12px',
-    color: '#718096',
+    fontSize: '11px',
+    fontWeight: '500',
+    color: '#9CA3AF',
     textTransform: 'uppercase',
+    letterSpacing: '0.05em',
+  },
+
+  value: {
+    fontSize: '24px',
+    fontWeight: '600',
+    color: '#F3F4F6',
+    lineHeight: '1.2',
   },
 };
 

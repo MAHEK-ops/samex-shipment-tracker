@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import Dashboard from './pages/Dashboard';
 import './index.css';
 
@@ -6,14 +5,21 @@ function App() {
   return (
     <div>
       <header style={styles.header}>
-        <div style={styles.headerInner}>
-          <div style={styles.logo}>
-            <span style={styles.logoIcon}>📦</span>
-            <span style={styles.logoText}>Samex</span>
-            <span style={styles.logoSub}>Shipment Tracker</span>
+        <div style={styles.headerContent}>
+          <div style={styles.brandSection}>
+            <div style={styles.logoRow}>
+              <span className="material-symbols-outlined" style={styles.logoIcon}>
+                package_2
+              </span>
+              <span style={styles.logo}>Samex Shipment Tracker</span>
+            </div>
+            <p style={styles.subtitle}>
+              Track and manage shipments in real time
+            </p>
           </div>
         </div>
       </header>
+
       <main style={styles.main}>
         <Dashboard />
       </main>
@@ -23,41 +29,60 @@ function App() {
 
 const styles = {
   header: {
-    backgroundColor: '#1a1a2e',
-    padding: '0 24px',
-    height: '60px',
-    display: 'flex',
-    alignItems: 'center',
-    boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
+    position: 'sticky',
+    top: 0,
+    zIndex: 100,
+    background: 'rgba(24, 28, 36, 0.85)',
+    backdropFilter: 'blur(16px)',
+    WebkitBackdropFilter: 'blur(16px)',
+    borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
+    padding: '18px 0',
+    boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
   },
-  headerInner: {
+
+  headerContent: {
     width: '100%',
-    maxWidth: '1200px',
-    margin: '0 auto',
+    maxWidth: '1400px',
+    margin: 'auto',
+    padding: '0 32px',
   },
-  logo: {
+
+  brandSection: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '4px',
+  },
+
+  logoRow: {
     display: 'flex',
     alignItems: 'center',
-    gap: '8px',
+    gap: '10px',
   },
+
   logoIcon: {
+    fontSize: '28px',
+    color: '#4F8CFF',
+    fontVariationSettings: "'FILL' 1",
+  },
+
+  logo: {
     fontSize: '22px',
-  },
-  logoText: {
-    color: '#ffffff',
     fontWeight: '700',
-    fontSize: '18px',
-    letterSpacing: '0.5px',
+    color: '#F3F4F6',
+    letterSpacing: '-0.02em',
   },
-  logoSub: {
-    color: '#a0aec0',
+
+  subtitle: {
     fontSize: '13px',
+    color: '#9CA3AF',
     fontWeight: '400',
+    marginLeft: '38px',
   },
+
   main: {
-    maxWidth: '1200px',
-    margin: '0 auto',
-    padding: '24px',
+    maxWidth: '1400px',
+    margin: 'auto',
+    padding: '40px 32px',
   },
 };
 

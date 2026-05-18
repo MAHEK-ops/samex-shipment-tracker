@@ -254,7 +254,7 @@ const styles = {
         fontSize: '22px',
         fontWeight: '700',
         marginBottom: '4px',
-        color: '#1a1a2e',
+        color: '#efeff4',
     },
     count: {
         color: '#718096',

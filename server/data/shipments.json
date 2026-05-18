@@ -7,7 +7,14 @@
     "origin": "Mumbai",
     "destination": "Delhi",
     "status": "Delivered",
-    "createdAt": "2025-05-01T08:00:00.000Z"
+    "createdAt": "2025-05-01T08:00:00.000Z",
+    "updatedAt": "2025-05-01T08:00:00.000Z",
+    "history": [
+      {
+        "status": "currentStatus",
+        "timestamp": "2025-05-01T08:00:00.000Z"
+      }
+    ]
   },
   {
     "id": "2",
@@ -17,7 +24,14 @@
     "origin": "Pune",
     "destination": "Bangalore",
     "status": "Cancelled",
-    "createdAt": "2025-05-03T09:30:00.000Z"
+    "createdAt": "2025-05-03T09:30:00.000Z",
+    "updatedAt": "2025-05-03T09:30:00.000Z",
+    "history": [
+      {
+        "status": "currentStatus",
+        "timestamp": "2025-05-03T09:30:00.000Z"
+      }
+    ]
   },
   {
     "id": "3",
@@ -26,8 +40,15 @@
     "receiver": "Meera Iyer",
     "origin": "Chennai",
     "destination": "Hyderabad",
-    "status": "Picked Up",
-    "createdAt": "2025-05-05T11:00:00.000Z"
+    "status": "Cancelled",
+    "createdAt": "2025-05-05T11:00:00.000Z",
+    "updatedAt": "2025-05-05T11:00:00.000Z",
+    "history": [
+      {
+        "status": "currentStatus",
+        "timestamp": "2025-05-05T11:00:00.000Z"
+      }
+    ]
   },
   {
     "id": "4",
@@ -36,8 +57,19 @@
     "receiver": "Rahul Verma",
     "origin": "Kolkata",
     "destination": "Ahmedabad",
-    "status": "Picked Up",
-    "createdAt": "2025-05-07T14:00:00.000Z"
+    "status": "Delivered",
+    "createdAt": "2025-05-07T14:00:00.000Z",
+    "updatedAt": "2026-05-18T11:27:55.087Z",
+    "history": [
+      {
+        "status": "currentStatus",
+        "timestamp": "2025-05-07T14:00:00.000Z"
+      },
+      {
+        "status": "Delivered",
+        "timestamp": "2026-05-18T11:27:55.087Z"
+      }
+    ]
   },
   {
     "id": "5",
@@ -47,7 +79,14 @@
     "origin": "Jaipur",
     "destination": "Surat",
     "status": "Cancelled",
-    "createdAt": "2025-05-08T10:15:00.000Z"
+    "createdAt": "2025-05-08T10:15:00.000Z",
+    "updatedAt": "2025-05-08T10:15:00.000Z",
+    "history": [
+      {
+        "status": "currentStatus",
+        "timestamp": "2025-05-08T10:15:00.000Z"
+      }
+    ]
   },
   {
     "id": "6",
@@ -57,7 +96,14 @@
     "origin": "Delhi",
     "destination": "Mumbai",
     "status": "Delivered",
-    "createdAt": "2025-05-10T08:45:00.000Z"
+    "createdAt": "2025-05-10T08:45:00.000Z",
+    "updatedAt": "2025-05-10T08:45:00.000Z",
+    "history": [
+      {
+        "status": "currentStatus",
+        "timestamp": "2025-05-10T08:45:00.000Z"
+      }
+    ]
   },
   {
     "id": "7",
@@ -66,8 +112,19 @@
     "receiver": "Tanvi Shah",
     "origin": "Bangalore",
     "destination": "Pune",
-    "status": "Pending",
-    "createdAt": "2025-05-12T13:00:00.000Z"
+    "status": "In Transit",
+    "createdAt": "2025-05-12T13:00:00.000Z",
+    "updatedAt": "2026-05-18T11:28:02.232Z",
+    "history": [
+      {
+        "status": "currentStatus",
+        "timestamp": "2025-05-12T13:00:00.000Z"
+      },
+      {
+        "status": "In Transit",
+        "timestamp": "2026-05-18T11:28:02.232Z"
+      }
+    ]
   },
   {
     "id": "8",
@@ -76,8 +133,15 @@
     "receiver": "Pooja Kulkarni",
     "origin": "Hyderabad",
     "destination": "Chennai",
-    "status": "Picked Up",
-    "createdAt": "2025-05-14T16:30:00.000Z"
+    "status": "In Transit",
+    "createdAt": "2025-05-14T16:30:00.000Z",
+    "updatedAt": "2025-05-14T16:30:00.000Z",
+    "history": [
+      {
+        "status": "currentStatus",
+        "timestamp": "2025-05-14T16:30:00.000Z"
+      }
+    ]
   },
   {
     "id": "abae42d7-b6c2-4057-b9d8-8f2ebc45e222",
@@ -87,6 +151,30 @@
     "origin": "Mumbai",
     "destination": "Pune",
     "status": "Pending",
-    "createdAt": "2026-05-18T10:42:09.959Z"
+    "createdAt": "2026-05-18T10:42:09.959Z",
+    "updatedAt": "2026-05-18T10:42:09.959Z",
+    "history": [
+      {
+        "status": "currentStatus",
+        "timestamp": "2026-05-18T10:42:09.959Z"
+      }
+    ]
+  },
+  {
+    "id": "e6a9f4d1-9615-456e-8c7d-5f49e70b2924",
+    "trackingId": "SHP-1010",
+    "sender": "xyz",
+    "receiver": "abc",
+    "origin": "Mumbai",
+    "destination": "Pune",
+    "status": "Pending",
+    "createdAt": "2026-05-18T11:27:40.010Z",
+    "updatedAt": "2026-05-18T11:27:40.010Z",
+    "history": [
+      {
+        "status": "Pending",
+        "timestamp": "2026-05-18T11:27:40.010Z"
+      }
+    ]
   }
 ]
