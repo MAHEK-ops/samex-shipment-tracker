@@ -1,32 +1,33 @@
-# Shipment Tracker - Samex.Delivery Engineering Assignment
+# Shipment Tracker — Samex.Delivery Engineering Assignment
 
 ## Project Overview
 
 A lightweight shipment tracking dashboard built for the Samex.Delivery Full Stack Engineering Intern assignment.
 
-The application allows logistics teams to create shipments, track their status through a defined workflow, and search/filter across active shipments.
+The application allows logistics teams to create shipments, track shipment progress through a defined workflow, and search/filter active shipments from a centralized dashboard.
 
-The implementation prioritized a reliable end-to-end flow under a strict 30–60 minute time constraint - focusing on working core functionality before optional enhancements.
+The implementation prioritized a reliable end-to-end workflow under a strict 30–60 minute time constraint, focusing first on working functionality and maintainable structure before secondary enhancements.
 
 ---
 
 ## Features
 
-- View all shipments in a structured table (Tracking ID, Sender, Receiver, Route, Status, Date)
-- Create new shipments with basic input validation
-- Update shipment status via inline dropdown with only valid next transitions available
-- Status transition enforcement at the API level
-- Search shipments by destination in real time
-- Filter shipments by status (Pending, Picked Up, In Transit, Delivered, Cancelled)
-- Stats strip showing live counts:
-  - Total
-  - Pending
-  - In Transit
-  - Delivered
-  - Cancelled
-- Error states with retry handling if the API is unavailable
-- 8 pre-seeded realistic shipment records
-- Persistent storage using a JSON file
+- View all shipments in a structured dashboard table
+- Create shipments with input validation
+- Update shipment status using controlled workflow transitions
+- Backend-enforced status validation
+- Search shipments by destination
+- Filter shipments by shipment status
+- Sort shipments by date
+- Live stats strip showing shipment counts
+- Toast notifications for actions and errors
+- Error states with retry handling
+- Persistent JSON-based storage
+- Shipment metadata support:
+  - `createdAt`
+  - `updatedAt`
+  - `history`
+- Modern glass-inspired logistics dashboard UI
 
 ---
 
@@ -46,14 +47,18 @@ The implementation prioritized a reliable end-to-end flow under a strict 30–60
 ```text
 samex-shipment-tracker/
 ├── server/
-│   ├── data/
-│   │   └── shipments.json
 │   ├── controllers/
 │   │   └── shipmentController.js
+│   │
+│   ├── data/
+│   │   └── shipments.json
+│   │
 │   ├── routes/
 │   │   └── shipmentRoutes.js
+│   │
 │   ├── utils/
 │   │   └── statusFlow.js
+│   │
 │   └── app.js
 │
 └── client/
@@ -62,6 +67,7 @@ samex-shipment-tracker/
         │   ├── ShipmentTable.jsx
         │   ├── CreateShipmentForm.jsx
         │   ├── FilterBar.jsx
+        │   ├── StatsStrip.jsx
         │   └── StatusBadge.jsx
         │
         ├── pages/
@@ -73,13 +79,15 @@ samex-shipment-tracker/
         └── App.jsx
 ```
 
-### Separation of Responsibilities
+---
 
-- Routes are kept thin and only map HTTP endpoints to controller functions
+## Separation of Responsibilities
+
+- Routes only map endpoints to controller functions
 - Business logic is isolated inside controllers and utility files
-- Status transition rules are centralized in `statusFlow.js`
+- Status transition rules are centralized inside `statusFlow.js`
 - API requests are abstracted into a frontend service layer
-- UI components are kept reusable and focused on presentation
+- Components remain reusable and focused on presentation
 
 ---
 
@@ -89,7 +97,7 @@ samex-shipment-tracker/
 
 Returns all shipments.
 
-**Response**
+Response:
 
 ```json
 [
@@ -101,7 +109,8 @@ Returns all shipments.
     "origin": "Mumbai",
     "destination": "Delhi",
     "status": "Delivered",
-    "createdAt": "2026-05-18T08:00:00.000Z"
+    "createdAt": "2026-05-18T08:00:00.000Z",
+    "updatedAt": "2026-05-18T08:00:00.000Z"
   }
 ]
 ```
@@ -112,7 +121,7 @@ Returns all shipments.
 
 Creates a new shipment.
 
-**Request**
+Request:
 
 ```json
 {
@@ -123,7 +132,7 @@ Creates a new shipment.
 }
 ```
 
-**Response**
+Response:
 
 ```json
 {
@@ -134,7 +143,14 @@ Creates a new shipment.
   "origin": "Pune",
   "destination": "Delhi",
   "status": "Pending",
-  "createdAt": "2026-05-18T10:00:00.000Z"
+  "createdAt": "2026-05-18T10:00:00.000Z",
+  "updatedAt": "2026-05-18T10:00:00.000Z",
+  "history": [
+    {
+      "status": "Pending",
+      "timestamp": "2026-05-18T10:00:00.000Z"
+    }
+  ]
 }
 ```
 
@@ -144,7 +160,7 @@ Creates a new shipment.
 
 Updates shipment status.
 
-**Request**
+Request:
 
 ```json
 {
@@ -152,7 +168,7 @@ Updates shipment status.
 }
 ```
 
-**Response**
+Response:
 
 ```json
 {
@@ -160,7 +176,7 @@ Updates shipment status.
 }
 ```
 
-**Invalid Transition**
+Invalid transition:
 
 ```json
 {
@@ -174,8 +190,8 @@ Updates shipment status.
 
 ```text
 Pending → Picked Up → In Transit → Delivered
-     ↓            ↓            ↓
- Cancelled    Cancelled   Cancelled
+     ↓            ↓             ↓
+ Cancelled    Cancelled    Cancelled
 ```
 
 Rules implemented:
@@ -217,27 +233,7 @@ Runs on:
 http://localhost:5173
 ```
 
-> Both frontend and backend servers should run simultaneously.
-
----
-
-## Seed Data
-
-The application includes 8 seeded shipments covering different shipment states:
-
-- Pending
-- Picked Up
-- In Transit
-- Delivered
-- Cancelled
-
-Tracking IDs follow:
-
-```text
-SHP-1001
-SHP-1002
-SHP-1003
-```
+Both frontend and backend servers should run simultaneously.
 
 ---
 
@@ -245,11 +241,12 @@ SHP-1003
 
 | Decision | Reason |
 |------------|---------|
-| JSON storage | Reduced setup overhead for a time-boxed assignment |
-| Separate routes/controllers/utils | Clear responsibility separation |
-| Dedicated status transition utility | Single source of truth for business rules |
+| JSON storage | Reduced setup overhead within the assignment time limit |
+| Separate routes/controllers/utils | Clear separation of responsibilities |
+| Dedicated status utility | Single source of truth for business rules |
 | Tracking ID generation | Simulates realistic logistics workflows |
-| Service layer for API calls | Keeps components cleaner and easier to maintain |
+| API service layer | Keeps components cleaner |
+| Shipment metadata | Supports future timeline/history features |
 
 ---
 
@@ -257,44 +254,44 @@ SHP-1003
 
 To prioritize a working end-to-end experience within the assignment window:
 
-- Used JSON storage instead of a database to minimize setup time
-- Focused on core shipment workflows before optional features
-- Avoided authentication and deployment setup initially
-- Prioritized functionality and reliability over advanced UI polish
+- Used JSON storage instead of a database
+- Prioritized core shipment workflows first
+- Focused on maintainability and clean architecture
+- Deferred authentication and deployment
 
 ---
 
 ## What I Would Do Next With More Time
 
-- Replace JSON storage with PostgreSQL or MongoDB
-- Add shipment history with timestamps for every status update
-- Implement real-time updates using WebSockets
-- Expand search capabilities (sender, receiver, origin)
-- Add server-side pagination for large datasets
-- Introduce role-based access control
+- Replace JSON storage with MongoDB/PostgreSQL
+- Add real-time shipment updates using WebSockets
+- Expand search to sender, receiver, and origin
+- Add role-based access control
+- Add server-side pagination
+- Add shipment timeline view
 - Add unit and integration tests
 
 ---
 
 ## AI-Assisted Workflow
 
-AI tools used:
+### AI tools used
 
 - Claude
 - ChatGPT
 
-AI accelerated:
+AI helped accelerate:
 
-- Project scaffolding
-- Component structure generation
+- Initial project scaffolding
+- Component generation
 - API implementation patterns
-- Faster iteration during development
+- Faster UI iteration
 
-Manual review and validation performed for:
+Manual review and validation were performed for:
 
 - Business logic
 - Status transition rules
 - Folder structure decisions
 - Final testing and cleanup
 
-Generated outputs were reviewed, understood, and adjusted before integration.
+Generated outputs were reviewed, understood, modified where needed, and validated before integration.
