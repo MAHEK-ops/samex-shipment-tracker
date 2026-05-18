@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
 import api from '../services/api';
+import ShipmentTable from '../components/ShipmentTable';
 
 function Dashboard() {
   const [shipments, setShipments] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [loading, setLoading]     = useState(true);
+  const [error, setError]         = useState(null);
 
   const fetchShipments = async () => {
     try {
@@ -19,6 +20,15 @@ function Dashboard() {
     }
   };
 
+  const handleStatusChange = async (id, newStatus) => {
+    try {
+      await api.patch(`/shipments/${id}/status`, { status: newStatus });
+      await fetchShipments();
+    } catch (err) {
+      alert(err.response?.data?.error || 'Failed to update status');
+    }
+  };
+
   useEffect(() => {
     fetchShipments();
   }, []);
@@ -28,14 +38,28 @@ function Dashboard() {
 
   return (
     <div>
-      <h2 style={styles.pageTitle}>All Shipments</h2>
-      <p style={styles.count}>{shipments.length} shipments found</p>
-      {/* Table, Form, Filters coming in next phases */}
+      <div style={styles.topBar}>
+        <div>
+          <h2 style={styles.pageTitle}>All Shipments</h2>
+          <p style={styles.count}>{shipments.length} shipments found</p>
+        </div>
+      </div>
+
+      <ShipmentTable
+        shipments={shipments}
+        onStatusChange={handleStatusChange}
+      />
     </div>
   );
 }
 
 const styles = {
+  topBar: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+    marginBottom: '20px',
+  },
   pageTitle: {
     fontSize: '22px',
     fontWeight: '700',
